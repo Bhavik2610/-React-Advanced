@@ -1,0 +1,49 @@
+=====================================================================
+ TASK 5 — Improving the useSearchMovies hook
+=====================================================================
+
+------------------------- PROMPT USED --------------------------------
+
+Suggest improvements for this React custom hook (useSearchMovies) that
+searches the OMDb API, focusing on better error handling and readability.
+
+--------------------- SUGGESTIONS RECEIVED ---------------------------
+
+1. Debounce the query so the API isn't called on every keystroke.
+2. Handle OMDb's "Response: False" case as an error (it returns HTTP 200
+   even when nothing is found).
+3. Cancel stale/in-flight requests so a slow earlier search can't
+   overwrite a newer one's results.
+4. Skip fetching entirely when the query is empty.
+5. Guard against a missing API key with a clear message.
+
+------------------- WHAT I IMPLEMENTED (and why) ---------------------
+
+Implemented #1 (debounce) as the headline change, plus #2, #3, #4, #5
+which improve correctness/readability:
+
+- DEBOUNCE (#1): the fetch is wrapped in setTimeout(run, 400) inside the
+  effect, and the cleanup clears the timer. Now typing "batman" fires ONE
+  request after you stop typing, instead of six (b, ba, bat, ...). This
+  cuts API usage and avoids fl: results flashing as each letter is typed.
+
+- OMDb "False" handling (#2): OMDb returns HTTP 200 with
+  { Response: "False", Error: "Movie not found!" } when there are no
+  matches. The hook now throws that Error so the UI shows a real message
+  instead of silently rendering an empty list.
+
+- Stale-request guard (#3): a `cancelled` flag in the cleanup ignores the
+  response of a request whose query is no longer current.
+
+- Empty-query short-circuit (#4) and missing-key guard (#5) make the hook
+  predictable and give clear feedback.
+
+--------------------------- RESULT -----------------------------------
+
+The hook is now more efficient (fewer calls), more correct (real error
+messages), and safer against race conditions — all while keeping the
+component (SearchMovies.jsx) tiny.
+
+=====================================================================
+Suggestions generated with AI assistance; debounce chosen as the main fix.
+=====================================================================
