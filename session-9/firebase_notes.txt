@@ -1,0 +1,44 @@
+=====================================================================
+ TASK 4 — Why Firebase helps front-end developers
+=====================================================================
+
+Firebase is a "backend as a service": it provides ready-made database,
+authentication, file storage, and hosting that you call directly from the
+front end, so a solo React developer can ship an app like Instagram or
+Zomato without building or running any servers of their own. For those
+apps it means login, storing posts/orders, uploading photos, and syncing
+data in real time all work out of the box, letting the developer focus on
+the UI instead of infrastructure, scaling, and security plumbing.
+
+=====================================================================
+ TASK 5 — Steps to add Firebase Authentication (no code)
+=====================================================================
+
+1. In the Firebase Console, open your project and go to
+   Build -> Authentication -> "Get started".
+
+2. Under the "Sign-in method" tab, enable the provider(s) you want
+   (e.g., Email/Password, or Google). Save.
+
+3. In your React app, make sure the firebase npm package is installed
+   and Firebase is already initialized (the firebase.js from Tasks 1-3).
+
+4. In firebase.js, import getAuth from "firebase/auth", call
+   getAuth(app), and export the returned auth instance so components can
+   use it.
+
+5. In your sign-up/login component, import the auth functions you need
+   (e.g., createUserWithEmailAndPassword and signInWithEmailAndPassword)
+   from "firebase/auth", and call them with the auth instance plus the
+   user's email and password when the form is submitted.
+
+6. Track who is logged in by subscribing to onAuthStateChanged(auth, ...)
+   (usually in a top-level component or an auth context) so the UI updates
+   when the user logs in or out.
+
+7. Add a logout button that calls signOut(auth).
+
+8. Test the full flow: sign up, refresh the page (session should persist),
+   and log out.
+
+=====================================================================
