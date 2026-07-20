@@ -1,0 +1,44 @@
+=====================================================================
+ TASK 5 — AI-generated logout function (Firebase Auth)
+=====================================================================
+
+------------------------- PROMPT USED --------------------------------
+
+Write a React logout function using Firebase Auth that signs out the
+current user and handles errors.
+
+--------------------- FUNCTION RECEIVED ------------------------------
+
+import { signOut } from "firebase/auth";
+import { auth } from "./firebase";
+
+async function logout() {
+  try {
+    await signOut(auth);
+    console.log("User signed out");
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
+}
+
+------------------------- INTEGRATION --------------------------------
+
+Adapted into src/components/LogoutButton.jsx:
+- Imported the shared `auth` instance from ../firebase.js.
+- Kept the try/catch, and added a small alert() on failure for the user.
+- Exposed it both as an exported logout() function and as a
+  <LogoutButton /> component.
+
+I did NOT manually clear any user state after logout — signing out fires
+onAuthStateChanged in App.jsx, which sets user back to null and swaps the
+UI back to the SignUp/Login forms automatically.
+
+--------------------------- HOW I TESTED -----------------------------
+
+1. Signed up / logged in — header showed "Logged in: <email>".
+2. Clicked "Log out" — header returned to "Not logged in" and the
+   SignUp/Login forms reappeared, confirming the auth state updated.
+
+=====================================================================
+Function generated with AI assistance, then adapted as noted.
+=====================================================================
