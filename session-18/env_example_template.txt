@@ -1,0 +1,26 @@
+# ============================================================
+#  .env template — copy to ".env.local" and fill in real values.
+#  Only variables prefixed REACT_APP_ are exposed to the app.
+#  NEVER put real secret server keys in a client React app.
+# ============================================================
+
+# ---- Firebase (web config — safe to expose to the browser) ----
+# Used to initialize the Firebase app in firebase.js. Firebase web
+# config values identify your project; real protection is Security Rules.
+REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your-app.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your-app
+REACT_APP_FIREBASE_APP_ID=1:000000000000:web:abcdef
+
+# ---- Spotify ----
+# Used when calling the Spotify Web API (e.g. to fetch playlists/tracks).
+# NOTE: a Spotify CLIENT SECRET is a real secret — keep it on a server,
+# never in REACT_APP_ (which ships to the browser). Only the client ID
+# or short-lived tokens belong in a front-end app.
+REACT_APP_SPOTIFY_API_KEY=your_spotify_client_id
+
+# ---- Google Maps ----
+# Used to load the Google Maps JavaScript API / embed maps in the UI.
+# Restrict this key by HTTP referrer in the Google Cloud console so it
+# can only be used from your own domain.
+REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_api_key

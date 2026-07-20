@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+
+# Files with real secrets — never commit these:
+.env.local
+.env*.local
+
+# Placeholder/template files below ARE safe to commit (no real keys):
+!.env.example
