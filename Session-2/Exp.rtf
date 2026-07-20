@@ -1,0 +1,41 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;\f2\fmodern\fcharset0 Courier;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid1\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b\fs24 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Task 5 \'97 explanation (write this in your own words)
+\f1\b0 \
+A custom hook like 
+\f2\fs26 useFetchData
+\f1\fs24  lets you write the fetch-loading-error logic 
+\f0\b once
+\f1\b0  and reuse it anywhere, instead of copy-pasting 
+\f2\fs26 useState
+\f1\fs24  + 
+\f2\fs26 useEffect
+\f1\fs24  + 
+\f2\fs26 try/catch
+\f1\fs24  into every component. In a Flipkart-style app that means less duplicated code, one place to fix bugs, and consistent loading/error behavior across the whole app. Two specific examples:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0
+\f0\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Product list page
+\f1\b0  \'97 
+\f2\fs26 useFetchData("/api/products")
+\f1\fs24  to load and display all products in a grid.\
+\ls1\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Product detail page
+\f1\b0  \'97 
+\f2\fs26 useFetchData("/api/products/123")
+\f1\fs24  to load a single product's details (and you could use it a third time for 
+\f2\fs26 "/api/products/123/reviews")
+\f1\fs24  to load that product's reviews) \'97 same hook, different URLs, no rewriting the fetch logic.\
+}
