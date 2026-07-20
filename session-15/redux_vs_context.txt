@@ -1,0 +1,41 @@
+=====================================================================
+ TASK 4 — Refactoring the cart from Context API to Redux
+=====================================================================
+
+BEFORE: src/context/cartContext.js
+  - A CartContext + useReducer, wrapped in a <CartProvider>.
+  - Components read/update the cart via a custom useCart() hook.
+
+AFTER: src/redux/cartSlice.js (used by src/components/Cart.jsx)
+  - A createSlice with addToCart / removeFromCart / clearCart.
+  - Registered in the store (src/store.js) under the `cart` key.
+  - Components use useSelector(state => state.cart) and useDispatch().
+
+------------------- ONE ADVANTAGE of Redux here ---------------------
+
+Redux DevTools. With Redux (via configureStore) I get a full, automatic
+timeline of every action and the exact state before/after each one, plus
+time-travel debugging — for free. With the Context version there's no
+built-in tooling; I'd have to add console.logs myself to trace changes.
+For a cart with many actions across many components, this visibility is a
+big win.
+
+(Other advantages: one central store scales cleanly as more slices are
+added; no need to nest more providers; predictable, testable reducers.)
+
+------------------- ONE DISADVANTAGE of Redux here ------------------
+
+More setup / boilerplate for a small feature. The Context version was a
+single file with a provider and a reducer. Redux needed the toolkit
+installed, a slice, a configured store, and a <Provider> at the root.
+For something as small as this cart, Context alone would have been enough
+— Redux only starts to pay off once state is large and shared widely.
+
+------------------------- RULE OF THUMB ------------------------------
+
+Use Context for small, localized, low-frequency shared state (theme,
+current user). Reach for Redux when state is large, updated often, shared
+across many components, or when you want DevTools/time-travel and
+structured, testable state logic.
+
+=====================================================================
