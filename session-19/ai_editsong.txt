@@ -1,0 +1,42 @@
+=====================================================================
+ TASK 5 — editSong reducer (Copilot-assisted, then adjusted)
+=====================================================================
+
+------------------- WHAT COPILOT FIRST SUGGESTED ---------------------
+
+// A common first suggestion edits by index or replaces the whole array:
+editSong(state, action) {
+  const index = state.findIndex((s) => s.id === action.payload.id);
+  state[index] = action.payload;
+}
+
+------------------------- ADJUSTMENTS MADE ---------------------------
+
+Issues with the raw suggestion:
+- findIndex returns -1 if the id isn't found, and state[-1] = ... would
+  silently create a weird "-1" key. Needs a guard.
+- Replacing the whole object (state[index] = action.payload) drops any
+  fields not included in the payload (e.g. if we later add a "duration"
+  field, it would be lost).
+
+Final version (in src/redux/playlistSlice.js) — edits BY ID, guards for
+"not found", and updates only the changed fields:
+
+editSong(state, action) {
+  const { id, title, artist } = action.payload;
+  const song = state.find((s) => s.id === id);
+  if (song) {
+    song.title = title;
+    song.artist = artist;
+  }
+}
+
+Why this is better:
+- Finds the song by id (stable identifier, not a fragile array index).
+- The `if (song)` guard means a bad/stale id is safely ignored.
+- Mutating individual fields (allowed here thanks to Redux Toolkit's Immer)
+  preserves any other fields on the song object.
+
+=====================================================================
+Reducer drafted with AI assistance, then reviewed and corrected.
+=====================================================================
