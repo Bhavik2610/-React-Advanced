@@ -1,0 +1,57 @@
+=====================================================================
+ TASK 5 — AI-generated shopping cart reducer (CartContext)
+=====================================================================
+
+------------------------- PROMPT USED --------------------------------
+
+Write a React useReducer reducer function for a shopping cart context that
+handles three actions: ADD_ITEM (add a product, and increase quantity if it
+already exists), REMOVE_ITEM (remove by id), and CLEAR_CART (empty it).
+State is an array of items { id, name, price, qty }.
+
+--------------------- REDUCER RECEIVED -------------------------------
+
+export function cartReducer(state, action) {
+  switch (action.type) {
+    case "ADD_ITEM": {
+      const existing = state.find((item) => item.id === action.payload.id);
+      if (existing) {
+        return state.map((item) =>
+          item.id === action.payload.id ? { ...item, qty: item.qty + 1 } : item
+        );
+      }
+      return [...state, { ...action.payload, qty: 1 }];
+    }
+    case "REMOVE_ITEM":
+      return state.filter((item) => item.id !== action.payload);
+    case "CLEAR_CART":
+      return [];
+    default:
+      return state;
+  }
+}
+
+------------------------- INTEGRATION --------------------------------
+
+Saved as src/context/cartReducer.js and wired into a CartProvider in
+src/context/CartContext.jsx:
+
+  const [cart, dispatch] = useReducer(cartReducer, []);
+  const value = useMemo(() => ({ cart, dispatch }), [cart]);
+  <CartContext.Provider value={value}>...
+
+Components read it with a useCart() hook and dispatch the three actions
+(see src/components/Cart.jsx).
+
+--------------------- CHANGES I MADE ---------------------------------
+
+- Added `qty` handling so adding the same product twice increments the
+  quantity instead of creating a duplicate line.
+- Wrapped the ADD_ITEM case in a block { } so the `const existing`
+  declaration is scoped to that case (avoids a lint error).
+- Memoized the context value with useMemo (Task 3 pattern) so the cart
+  provider doesn't hand consumers a new object identity every render.
+
+=====================================================================
+Reducer generated with AI assistance, then adapted as noted above.
+=====================================================================
