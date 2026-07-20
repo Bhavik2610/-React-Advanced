@@ -1,0 +1,52 @@
+
+ TASK 5 — Formik + Yup vs a manually handled form
+
+Consider the playlist form (name, description, genre). Done manually with
+only useState, you'd need something like:
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [genre, setGenre] = useState("");
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  function validate() {
+    const e = {};
+    if (!name.trim()) e.name = "Playlist name is required";
+    if (!genre) e.genre = "Please select a genre";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+  // ...plus onBlur handlers to set touched, onChange for each field,
+  //    and re-running validate() on submit.
+
+--- 3 ways Formik + Yup makes the code cleaner / easier to maintain ---
+
+1. NO MANUAL STATE PER FIELD.
+   Formik holds all field values, errors, and touched state internally.
+   The manual version needs a useState (or an object) for values, another
+   for errors, another for touched — and wiring for each. Formik replaces
+   all of that with one initialValues object.
+
+2. VALIDATION IS DECLARATIVE (Yup schema), not hand-written if-statements.
+   The rules live in one readable schema:
+     Yup.object({ name: Yup.string().required(), genre: Yup.string().required() })
+   Adding a rule (min length, regex, matches) is one line, versus writing
+   and maintaining custom if-checks and error strings by hand.
+
+3. "TOUCHED" + ERROR DISPLAY IS BUILT IN.
+   Formik tracks which fields the user has interacted with, and
+   <ErrorMessage> / touched shows errors only at the right time — no
+   manual onBlur handlers or touched bookkeeping. The manual version has
+   to implement all of that itself.
+
+(Bonus: less boilerplate on inputs — <Field name="genre" as="select"> wires
+value + onChange + onBlur automatically, instead of repeating
+value={} onChange={} onBlur={} on every input.)
+
+--------------------------- WHEN MANUAL IS FINE ----------------------
+
+For a single tiny input, plain useState is simpler and has no dependency.
+Formik/Yup pays off as forms grow — more fields, more validation rules,
+and the need to show errors at the right moment.
+
